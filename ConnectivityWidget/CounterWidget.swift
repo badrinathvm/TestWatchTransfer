@@ -92,18 +92,19 @@ struct CounterWidgetEntryView : View {
 
         case .accessoryCorner:
             Button(intent: IncrementCounterIntent()) {
-                // Gauge text style - shows count with curved progress arc
-                Text("\(entry.count)")
-                    .font(.system(size: 24, weight: .bold, design: .rounded))
-                    .foregroundStyle(.white)
-            }
-            .buttonStyle(.plain)
-            .widgetLabel {
+                // Gauge with count in the corner
                 Gauge(value: progress) {
-                    EmptyView()
+                    Text("\(entry.count)")
+                        .font(.system(size: 20, weight: .bold, design: .rounded))
                 }
                 .gaugeStyle(.accessoryCircularCapacity)
                 .tint(gaugeColor)
+            }
+            .buttonStyle(.plain)
+            .widgetLabel {
+                // Pickleball icon displayed along the curved edge
+                Image(systemName: "figure.pickleball")
+                    .font(.system(size: 14))
             }
 
         case .accessoryInline:

@@ -54,11 +54,13 @@ struct SubmitWidgetEntryView: View {
 
         case .accessoryCorner:
             ZStack {
-                Image(systemName: "paperplane.fill")
-                    .font(.title2)
+                Image(systemName: "checkmark.circle.fill")
+                    .font(.system(size: 24, weight: .medium))
+                    .foregroundStyle(.green)
             }
             .widgetLabel {
-                Text("\(entry.count)")
+                Text("Submit")
+                    .font(.system(size: 12, weight: .semibold))
             }
 
         case .accessoryInline:
