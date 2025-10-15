@@ -25,7 +25,7 @@ struct MistakeTimelineChart: View {
             let minutes = timeInterval / 60.0
             data.append(ChartDataPoint(timeInMinutes: minutes, cumulativeMistakes: index + 1))
         }
-
+        print(data)
         return data
     }
 
