@@ -12,8 +12,6 @@ import Combine
 struct CounterSubmitView: View {
     @State private var count: Int = 0
     @State private var showSubmitConfirmation = false
-    @State private var sessionStartTime: Date = Date()
-    @State private var mistakeTimeline: [Date] = []
     @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
@@ -40,7 +38,6 @@ struct CounterSubmitView: View {
                 Button(action: {
                     CounterManager.shared.increment()
                     count = CounterManager.shared.currentCount
-                    mistakeTimeline.append(Date())
                 }) {
                     Image(systemName: "plus.circle.fill")
                         .font(.title)
@@ -96,10 +93,10 @@ struct CounterSubmitView: View {
     private func submitSession() {
         let sessionData = SessionData(
             sessionName: nil, // Will auto-generate based on time
-            startTime: sessionStartTime,
+            startTime: CounterManager.shared.sessionStartTime,
             endTime: Date(),
             mistakeCount: count,
-            mistakeTimeline: mistakeTimeline,
+            mistakeTimeline: CounterManager.shared.mistakeTimeline,
             notes: nil
         )
 
@@ -108,8 +105,6 @@ struct CounterSubmitView: View {
         // Reset for next session
         CounterManager.shared.reset()
         count = 0
-        sessionStartTime = Date()
-        mistakeTimeline = []
 
         showSubmitConfirmation = true
     }

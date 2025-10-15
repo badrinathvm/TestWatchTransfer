@@ -14,6 +14,8 @@ class CounterManager {
 
     private let appGroupID = "group.com.badrinath.watchTransfer"
     private let counterKey = "counterValue1"
+    private let timelineKey = "mistakeTimeline"
+    private let sessionStartKey = "sessionStartTime"
 
     private lazy var defaults: UserDefaults? = {
         UserDefaults(suiteName: appGroupID)
@@ -54,7 +56,40 @@ class CounterManager {
             defaults.synchronize()
         }
     }
-    
+
+    var mistakeTimeline: [Date] {
+        get {
+            guard let defaults = defaults,
+                  let data = defaults.data(forKey: timelineKey),
+                  let timeline = try? JSONDecoder().decode([Date].self, from: data) else {
+                return []
+            }
+            return timeline
+        }
+        set {
+            guard let defaults = defaults,
+                  let data = try? JSONEncoder().encode(newValue) else {
+                return
+            }
+            defaults.set(data, forKey: timelineKey)
+            defaults.synchronize()
+        }
+    }
+
+    var sessionStartTime: Date {
+        get {
+            guard let defaults = defaults,
+                  let date = defaults.object(forKey: sessionStartKey) as? Date else {
+                return Date()
+            }
+            return date
+        }
+        set {
+            defaults?.set(newValue, forKey: sessionStartKey)
+            defaults?.synchronize()
+        }
+    }
+
     func submit() {
         // TODO: Future implementation - send session data to iOS app
         print("📊 Submit: \(currentCount) mistakes recorded")
@@ -64,14 +99,22 @@ class CounterManager {
     func increment() {
         let oldValue = currentCount
         currentCount += 1
+
+        // Append current time to mistake timeline
+        var timeline = mistakeTimeline
+        timeline.append(Date())
+        mistakeTimeline = timeline
+
         let newValue = currentCount
-        print("➕ INCREMENT: \(oldValue) -> \(newValue)")
+        print("➕ INCREMENT: \(oldValue) -> \(newValue), Timeline count: \(timeline.count)")
         reloadComplications()
     }
 
     func reset() {
         currentCount = 0
-        print("🔄 Counter reset. New value: \(currentCount)")
+        mistakeTimeline = []
+        sessionStartTime = Date()
+        print("🔄 Counter reset. New value: \(currentCount), Timeline cleared, Session start time reset")
         reloadComplications()
     }
 

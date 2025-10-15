@@ -13,6 +13,7 @@ struct SessionListView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Session.startTime, order: .reverse) private var sessions: [Session]
     @State private var showClearAllAlert = false
+    @State private var hasSetupObserver = false
 
     var body: some View {
         NavigationStack {
@@ -75,7 +76,10 @@ struct SessionListView: View {
                 .padding(.bottom, 20)
             }
             .onAppear {
-                setupObserver()
+                if !hasSetupObserver {
+                    setupObserver()
+                    hasSetupObserver = true
+                }
             }
             .navigationTitle("Workouts")
             .navigationBarTitleDisplayMode(.large)
