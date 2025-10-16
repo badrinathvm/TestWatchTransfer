@@ -12,7 +12,6 @@ import SwiftData
 struct SessionListView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Session.startTime, order: .reverse) private var sessions: [Session]
-    @State private var hasSetupObserver = false
 
     var body: some View {
         NavigationStack {
@@ -74,49 +73,8 @@ struct SessionListView: View {
                 }
                 .padding(.bottom, 20)
             }
-            .onAppear {
-                if !hasSetupObserver {
-                    setupObserver()
-                    hasSetupObserver = true
-                }
-            }
             .navigationTitle("Workouts")
             .navigationBarTitleDisplayMode(.large)
-        }
-    }
-}
-
-
-extension SessionListView {
-    private func setupObserver() {
-        NotificationCenter.default.addObserver(
-            forName: .didReceiveSession,
-            object: nil,
-            queue: .main
-        ) { [self] notification in
-            if let sessionData = notification.object as? SessionData {
-                saveSession(sessionData)
-            }
-        }
-    }
-
-    private func saveSession(_ sessionData: SessionData) {
-        let session = Session(
-            sessionName: sessionData.sessionName,
-            startTime: sessionData.startTime,
-            endTime: sessionData.endTime,
-            mistakeCount: sessionData.mistakeCount,
-            mistakeTimeline: sessionData.mistakeTimeline,
-            notes: sessionData.notes
-        )
-
-        modelContext.insert(session)
-
-        do {
-            try modelContext.save()
-            print("✅ Session saved: \(session.mistakeCount) mistakes")
-        } catch {
-            print("❌ Failed to save session: \(error)")
         }
     }
 }

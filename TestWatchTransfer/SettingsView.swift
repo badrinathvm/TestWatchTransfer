@@ -33,7 +33,7 @@ struct SettingsView: View {
                 }
 
                 Section(header: Text("About")) {
-                    Text("Pickleball Mistake Tracker helps you monitor and improve your game by tracking mistakes during practice sessions.")
+                    Text("Pickleball Rite helps you monitor and improve your game by analyzing mistakes during practice and tournaments.")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }

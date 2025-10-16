@@ -49,6 +49,11 @@ struct CounterWidgetEntryView : View {
         min(Double(entry.count) / 15.0, 1.0)
     }
 
+    // Progress for 30-mistake scale (for accessoryCorner)
+    private var progressTo30: Double {
+        min(Double(entry.count) / 30.0, 1.0)
+    }
+
     var body: some View {
         switch family {
         case .accessoryCircular:
@@ -91,21 +96,37 @@ struct CounterWidgetEntryView : View {
             .buttonStyle(.plain)
 
         case .accessoryCorner:
+//            Button(intent: IncrementCounterIntent()) {
+//                HStack(spacing: 6) {
+//                    // Count number
+//                    Text("\(entry.count)")
+//                        .font(.system(size: 24, weight: .bold, design: .rounded))
+//                        .foregroundStyle(gaugeColor)
+//                }
+//            }
+//            .buttonStyle(.plain)
+//            .widgetLabel {
+//                Image(systemName: "figure.pickleball")
+//                    .font(.system(size: 14))
+//            }
+            
             Button(intent: IncrementCounterIntent()) {
-                // Gauge with count in the corner
-                Gauge(value: progress) {
+                HStack(spacing: 8) {
                     Text("\(entry.count)")
-                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                        .foregroundStyle(gaugeColor)
+                }
+            }
+            .buttonStyle(.plain)
+            .widgetLabel {
+                Gauge(value: progressTo30) {
+                    EmptyView()
                 }
                 .gaugeStyle(.accessoryCircularCapacity)
                 .tint(gaugeColor)
             }
-            .buttonStyle(.plain)
-            .widgetLabel {
-                // Pickleball icon displayed along the curved edge
-                Image(systemName: "figure.pickleball")
-                    .font(.system(size: 14))
-            }
+            
+            
 
         case .accessoryInline:
             Button(intent: IncrementCounterIntent()) {
