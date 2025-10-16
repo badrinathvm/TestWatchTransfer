@@ -12,7 +12,6 @@ import SwiftData
 struct SessionListView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Session.startTime, order: .reverse) private var sessions: [Session]
-    @State private var showClearAllAlert = false
     @State private var hasSetupObserver = false
 
     var body: some View {
@@ -83,41 +82,6 @@ struct SessionListView: View {
             }
             .navigationTitle("Workouts")
             .navigationBarTitleDisplayMode(.large)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: {
-                        showClearAllAlert = true
-                    }) {
-                        Image(systemName: "trash.circle.fill")
-                            .foregroundStyle(.red)
-                    }
-                    .disabled(sessions.isEmpty)
-                }
-
-                #if DEBUG
-//                ToolbarItem(placement: .topBarLeading) {
-//                    Menu {
-//                        Button("Add Sample Data") {
-//                            SampleData.createSampleSessions(context: modelContext)
-//                        }
-//                        Button("Clear All", role: .destructive) {
-//                            SampleData.clearAllSessions(context: modelContext)
-//                        }
-//                    } label: {
-//                        Image(systemName: "wrench.and.screwdriver")
-//                            .foregroundStyle(.secondary)
-//                    }
-//                }
-                #endif
-            }
-            .alert("Clear All Sessions?", isPresented: $showClearAllAlert) {
-                Button("Cancel", role: .cancel) { }
-                Button("Clear All", role: .destructive) {
-                    clearAllSessions()
-                }
-            } message: {
-                Text("This will permanently delete all \(sessions.count) session(s). This action cannot be undone.")
-            }
         }
     }
 }
@@ -153,19 +117,6 @@ extension SessionListView {
             print("✅ Session saved: \(session.mistakeCount) mistakes")
         } catch {
             print("❌ Failed to save session: \(error)")
-        }
-    }
-
-    private func clearAllSessions() {
-        for session in sessions {
-            modelContext.delete(session)
-        }
-
-        do {
-            try modelContext.save()
-            print("✅ Cleared all \(sessions.count) sessions")
-        } catch {
-            print("❌ Failed to clear sessions: \(error)")
         }
     }
 }

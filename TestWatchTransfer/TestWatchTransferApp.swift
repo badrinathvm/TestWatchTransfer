@@ -25,7 +25,7 @@ struct TestWatchTransferApp: App {
 
     var body: some Scene {
         WindowGroup {
-            SessionListView()
+            ContentView()
                 .onAppear {
                     _ = WatchConnectivityManager.shared
                 }

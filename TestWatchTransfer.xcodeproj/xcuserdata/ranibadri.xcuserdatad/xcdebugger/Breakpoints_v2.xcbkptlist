@@ -320,7 +320,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "57"
             endingLineNumber = "57"
-            landmarkName = "currentCount"
+            landmarkName = "mistakeTimeline"
             landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
@@ -336,8 +336,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "29"
             endingLineNumber = "29"
-            landmarkName = "init()"
-            landmarkType = "7">
+            landmarkName = "currentCount"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -352,8 +352,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "33"
             endingLineNumber = "33"
-            landmarkName = "init()"
-            landmarkType = "7">
+            landmarkName = "currentCount"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -366,8 +366,8 @@
             filePath = "Connectivity Watch App/CounterSubmitView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -382,8 +382,8 @@
             filePath = "Connectivity Watch App/CounterSubmitView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "61"
-            endingLineNumber = "61"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
