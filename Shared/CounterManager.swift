@@ -13,7 +13,7 @@ class CounterManager {
     static let shared = CounterManager()
 
     private let appGroupID = "group.com.badrinath.watchTransfer"
-    private let counterKey = "counterValue1"
+    private let counterKey = "counterValue"
     private let timelineKey = "mistakeTimeline"
     private let sessionStartKey = "sessionStartTime"
 
@@ -24,34 +24,20 @@ class CounterManager {
     private init() {
         // Ensure defaults is initialized
         _ = defaults
-
-        // Debug: Verify App Group is accessible
-        if let defaults = defaults {
-            print("✅ App Group UserDefaults initialized successfully")
-            print("🔑 App Group ID: \(appGroupID)")
-            print("🗂️ Storage Key: \(counterKey)")
-        } else {
-            print("❌ Failed to initialize App Group UserDefaults!")
-        }
     }
 
     var currentCount: Int {
         get {
             guard let defaults = defaults else {
-                print("⚠️ App Group UserDefaults not available, using standard defaults")
                 return UserDefaults.standard.integer(forKey: counterKey)
             }
-            let value = defaults.integer(forKey: counterKey)
-            print("📖 GET counterValue1 = \(value) from App Group UserDefaults")
-            return value
+            return defaults.integer(forKey: counterKey)
         }
         set {
             guard let defaults = defaults else {
-                print("⚠️ App Group UserDefaults not available, using standard defaults")
                 UserDefaults.standard.set(newValue, forKey: counterKey)
                 return
             }
-            print("💾 SET counterValue1 = \(newValue) to App Group UserDefaults")
             defaults.set(newValue, forKey: counterKey)
             defaults.synchronize()
         }
@@ -91,13 +77,10 @@ class CounterManager {
     }
 
     func submit() {
-        // TODO: Future implementation - send session data to iOS app
-        print("📊 Submit: \(currentCount) mistakes recorded")
         reset()
     }
-    
+
     func increment() {
-        let oldValue = currentCount
         currentCount += 1
 
         // Append current time to mistake timeline
@@ -105,8 +88,21 @@ class CounterManager {
         timeline.append(Date())
         mistakeTimeline = timeline
 
-        let newValue = currentCount
-        print("➕ INCREMENT: \(oldValue) -> \(newValue), Timeline count: \(timeline.count)")
+        reloadComplications()
+    }
+
+    func decrement() {
+        guard currentCount > 0 else { return }
+
+        currentCount -= 1
+
+        // Remove last entry from mistake timeline
+        var timeline = mistakeTimeline
+        if !timeline.isEmpty {
+            timeline.removeLast()
+            mistakeTimeline = timeline
+        }
+
         reloadComplications()
     }
 
@@ -114,7 +110,6 @@ class CounterManager {
         currentCount = 0
         mistakeTimeline = []
         sessionStartTime = Date()
-        print("🔄 Counter reset. New value: \(currentCount), Timeline cleared, Session start time reset")
         reloadComplications()
     }
 
