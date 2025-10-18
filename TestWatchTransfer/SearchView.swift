@@ -10,6 +10,7 @@ import SwiftData
 
 struct SearchView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.colorScheme) var colorScheme
     @Query(sort: \Session.startTime, order: .reverse) private var sessions: [Session]
     @State private var searchText = ""
 
@@ -76,6 +77,7 @@ struct SearchView: View {
                                         SessionRowView(session: session)
                                     }
                                     .buttonStyle(.plain)
+                                    .tint(.orange)
                                 }
                             }
                             .padding(.horizontal, 20)
@@ -109,6 +111,7 @@ struct SearchView: View {
                                         SessionRowView(session: session)
                                     }
                                     .buttonStyle(.plain)
+                                    .tint(.orange)
                                 }
                             }
                             .padding(.horizontal, 20)
@@ -117,6 +120,7 @@ struct SearchView: View {
                 }
                 .padding(.bottom, 20)
             }
+            .background(Color(UIColor.systemGroupedBackground))
             .navigationTitle("Search")
             .navigationBarTitleDisplayMode(.large)
             .searchable(text: $searchText, prompt: "Search sessions")

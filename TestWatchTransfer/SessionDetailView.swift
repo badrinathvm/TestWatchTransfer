@@ -101,16 +101,16 @@ struct SessionDetailView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button(action: {
-                    dismiss()
-                }) {
-                    Image(systemName: "xmark.circle.fill")
-                        .font(.system(size: 28))
-                        .foregroundStyle(.secondary.opacity(0.3))
-                        .symbolRenderingMode(.hierarchical)
-                }
-            }
+//            ToolbarItem(placement: .topBarLeading) {
+//                Button(action: {
+//                    dismiss()
+//                }) {
+//                    Image(systemName: "xmark.circle.fill")
+//                        .font(.system(size: 28))
+//                        .foregroundStyle(.secondary.opacity(0.3))
+//                        .symbolRenderingMode(.hierarchical)
+//                }
+//            }
 
             ToolbarItem(placement: .topBarTrailing) {
                 Button(action: {

@@ -9,6 +9,8 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
+    @Environment(\.colorScheme) var colorScheme
+
     var body: some View {
         if #available(iOS 18.0, *) {
             TabView {
@@ -24,6 +26,7 @@ struct ContentView: View {
                     SettingsView()
                 }
             }
+            .tint(.orange)
         } else {
             // Fallback for iOS 17 and earlier
             TabView {
@@ -42,6 +45,7 @@ struct ContentView: View {
                         Label("Settings", systemImage: "gear")
                     }
             }
+            .tint(.orange)
         }
     }
 }

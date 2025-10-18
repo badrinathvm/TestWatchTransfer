@@ -118,5 +118,15 @@ struct TestWatchTransferApp: App {
  
  Recovery Miss
  Did not reset position effectively after wide or deep shots
-
+ 
+ 
+ 
+ Location updates for Session Details
+ Register the Apple account with Pickerites app.
+ Add the Erroro Options selection in session Details.
+ Build a graph with Error Rate Consistency
+ HealthKit Integration to pull data related to PickleBall Session
+ Onboarding screens
+ App Logo
+ Enhance the Complications UI some times it is navigating to the watch app.
  */

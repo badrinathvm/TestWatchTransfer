@@ -96,34 +96,20 @@ struct CounterWidgetEntryView : View {
             .buttonStyle(.plain)
 
         case .accessoryCorner:
-//            Button(intent: IncrementCounterIntent()) {
-//                HStack(spacing: 6) {
-//                    // Count number
-//                    Text("\(entry.count)")
-//                        .font(.system(size: 24, weight: .bold, design: .rounded))
-//                        .foregroundStyle(gaugeColor)
-//                }
-//            }
-//            .buttonStyle(.plain)
-//            .widgetLabel {
-//                Image(systemName: "figure.pickleball")
-//                    .font(.system(size: 14))
-//            }
-            
             Button(intent: IncrementCounterIntent()) {
-                HStack(spacing: 8) {
+                VStack(spacing: 1) {
                     Text("\(entry.count)")
-                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                        .font(.system(size: 16, weight: .medium, design: .rounded))
                         .foregroundStyle(gaugeColor)
+
+                    Image(systemName: "figure.pickleball")
+                        .font(.system(size: 14, weight: .medium))
+                        .foregroundStyle(gaugeColor.opacity(0.8))
                 }
             }
             .buttonStyle(.plain)
             .widgetLabel {
-                Gauge(value: progressTo30) {
-                    EmptyView()
-                }
-                .gaugeStyle(.accessoryCircularCapacity)
-                .tint(gaugeColor)
+                EmptyView()
             }
             
             
