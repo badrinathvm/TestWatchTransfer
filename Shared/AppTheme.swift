@@ -131,7 +131,7 @@ struct PickleballTheme: ThemeProtocol {
     var fontSizeCaption: CGFloat { 12 }
     var fontSizeFootnote: CGFloat { 13 }
     var fontSizeBody: CGFloat { 15 }
-    var fontSizeTitle: CGFloat { 20 }
+    var fontSizeTitle: CGFloat { 18 }
     var fontSizeHeading: CGFloat { 28 }
     var fontSizeLargeTitle: CGFloat { 34 }
 
@@ -208,7 +208,7 @@ struct BlueTheme: ThemeProtocol {
     var fontSizeCaption: CGFloat { 12 }
     var fontSizeFootnote: CGFloat { 13 }
     var fontSizeBody: CGFloat { 15 }
-    var fontSizeTitle: CGFloat { 20 }
+    var fontSizeTitle: CGFloat { 18 }
     var fontSizeHeading: CGFloat { 28 }
     var fontSizeLargeTitle: CGFloat { 34 }
 
@@ -345,7 +345,7 @@ struct OpticYellowTheme: ThemeProtocol {
     var fontSizeCaption: CGFloat { 12 }
     var fontSizeFootnote: CGFloat { 13 }
     var fontSizeBody: CGFloat { 15 }
-    var fontSizeTitle: CGFloat { 20 }
+    var fontSizeTitle: CGFloat { 18 }
     var fontSizeHeading: CGFloat { 28 }
     var fontSizeLargeTitle: CGFloat { 34 }
 

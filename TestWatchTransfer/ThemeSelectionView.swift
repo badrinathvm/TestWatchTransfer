@@ -19,31 +19,52 @@ struct ThemeOption: Identifiable {
 struct ThemeSelectionView: View {
     @EnvironmentObject var themeManager: ThemeManager
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.colorScheme) var colorScheme
 
     private var selectedTheme: String {
         themeManager.selectedTheme
     }
 
-    private let themes: [ThemeOption] = [
-        ThemeOption(
-            name: "Ocean Depths",
-            description: "Cool and refreshing - ideal for endurance and flow states",
-            colorPreview: .blue,
-            themeKey: "blue"
-        ),
-        ThemeOption(
-            name: "Flame Burst",
-            description: "Energetic and motivating - great for high-intensity training",
-            colorPreview: .orange,
-            themeKey: "pickleball"
-        ),
-        ThemeOption(
-            name: "Optic Energy",
-            description: "Vibrant and dynamic - perfect for power and focus",
-            colorPreview: Color(red: 0.97, green: 1.0, blue: 0.0),
-            themeKey: "opticYellow"
-        )
-    ]
+    private var themes: [ThemeOption] {
+        [
+            ThemeOption(
+                name: "Ocean Depths",
+                description: "Cool and refreshing - ideal for endurance and flow states",
+                colorPreview: .blue,
+                themeKey: "blue"
+            ),
+            ThemeOption(
+                name: "Flame Burst",
+                description: "Energetic and motivating - great for high-intensity training",
+                colorPreview: .orange,
+                themeKey: "pickleball"
+            ),
+            ThemeOption(
+                name: "Optic Energy",
+                description: "Vibrant and dynamic - perfect for power and focus",
+                colorPreview: opticYellowPreviewColor,
+                themeKey: "opticYellow"
+            )
+        ]
+    }
+
+    // Adaptive color for Optic Yellow preview matching the theme
+    private var opticYellowPreviewColor: Color {
+        #if os(iOS)
+        return Color(UIColor { traitCollection in
+            switch traitCollection.userInterfaceStyle {
+            case .dark:
+                // Bright optic yellow for dark mode
+                return UIColor(red: 0.97, green: 1.0, blue: 0.0, alpha: 1.0)
+            default:
+                // Parrot green for light mode
+                return UIColor(red: 0.3, green: 0.7, blue: 0.2, alpha: 1.0)
+            }
+        })
+        #else
+        return Color(red: 0.97, green: 1.0, blue: 0.0)
+        #endif
+    }
 
     var body: some View {
         ScrollView {

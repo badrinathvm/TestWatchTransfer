@@ -28,7 +28,22 @@ struct SettingsView: View {
         switch themeManager.selectedTheme {
         case "blue": return .blue
         case "pickleball": return .orange
-        case "opticYellow": return Color(red: 0.97, green: 1.0, blue: 0.0)
+        case "opticYellow":
+            // Adaptive color matching OpticYellow theme
+            #if os(iOS)
+            return Color(UIColor { traitCollection in
+                switch traitCollection.userInterfaceStyle {
+                case .dark:
+                    // Bright optic yellow for dark mode
+                    return UIColor(red: 0.97, green: 1.0, blue: 0.0, alpha: 1.0)
+                default:
+                    // Parrot green for light mode
+                    return UIColor(red: 0.3, green: 0.7, blue: 0.2, alpha: 1.0)
+                }
+            })
+            #else
+            return Color(red: 0.97, green: 1.0, blue: 0.0)
+            #endif
         default: return .blue
         }
     }
