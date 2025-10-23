@@ -12,8 +12,105 @@ import SwiftData
 struct SessionListView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject var themeManager: ThemeManager
     @Query(sort: \Session.startTime, order: .reverse) private var sessions: [Session]
 
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 16) {
+                    // Recent Activity Header
+                    HStack {
+                        Text("Recent Activity")
+                            .font(.system(size: 24, weight: .bold))
+                            .foregroundStyle(AppTheme.current.primary)
+
+                        Spacer()
+
+                        // History button - future feature
+                        Button(action: {
+                            // TODO: Navigate to full history
+                        }) {
+                            Text("History")
+                                .font(.system(size: AppTheme.current.fontSizeBody, weight: .medium))
+                                .foregroundStyle(AppTheme.current.primary)
+                        }
+                    }
+                    .padding(.horizontal, AppTheme.current.spacingXL)
+                    .padding(.top, AppTheme.current.spacingS)
+
+                    // Session List
+                    if sessions.isEmpty {
+                        // Empty state
+                        VStack(spacing: AppTheme.current.spacingL) {
+                            Image(systemName: "clock.badge.exclamationmark")
+                                .font(.system(size: 60))
+                                .foregroundStyle(AppTheme.current.primary.opacity(0.3))
+                                .padding(.top, 60)
+
+                            Text("No Sessions Yet")
+                                .font(.system(size: AppTheme.current.fontSizeTitle, weight: .semibold))
+                                .foregroundStyle(AppTheme.current.textSecondary)
+
+                            Text("Start tracking your practice sessions\nfrom your Apple Watch")
+                                .font(.system(size: AppTheme.current.fontSizeBody))
+                                .foregroundStyle(AppTheme.current.textSecondary.opacity(0.8))
+                                .multilineTextAlignment(.center)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.top, 40)
+                    } else {
+                        LazyVStack(spacing: AppTheme.current.spacingXL) {
+                            ForEach(groupedSessions, id: \.0) { (sectionTitle, sectionSessions) in
+                                VStack(alignment: .leading, spacing: AppTheme.current.spacingM) {
+                                    // Section header
+                                    Text(sectionTitle)
+                                        .font(.system(size: 18, weight: .semibold))
+                                        .foregroundStyle(AppTheme.current.textPrimary)
+                                        .padding(.horizontal, AppTheme.current.spacingXL)
+
+                                    // Sessions in this section
+                                    LazyVStack(spacing: AppTheme.current.spacingM) {
+                                        ForEach(sectionSessions) { session in
+                                            NavigationLink {
+                                                SessionDetailView(session: session)
+                                            } label: {
+                                                SessionRowView(session: session)
+                                            }
+                                            .buttonStyle(.plain)
+                                            .tint(AppTheme.current.accent)
+                                        }
+                                    }
+                                    .padding(.horizontal, AppTheme.current.spacingXL)
+                                }
+                            }
+                        }
+                    }
+                }
+                .padding(.bottom, AppTheme.current.spacingXL)
+            }
+            .background(AppTheme.current.backgroundPrimary)
+            .navigationTitle("Workouts")
+            .navigationBarTitleDisplayMode(.large)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button(action: {
+                        populateDummyData()
+                    }) {
+                        Image(systemName: "gear")
+                            .frame(width: 25, height: 25)
+                    }
+                }
+            }
+            .toolbarBackground(.visible, for: .tabBar)
+            .toolbarBackground(Color(uiColor: .systemBackground), for: .tabBar)
+            .toolbarColorScheme(colorScheme, for: .tabBar)
+        }
+        .overlay {
+            
+        }
+    }
+    
     // Group sessions by time periods
     private var groupedSessions: [(String, [Session])] {
         let calendar = Calendar.current
@@ -139,102 +236,6 @@ struct SessionListView: View {
             try modelContext.save()
         } catch {
             print("❌ Failed to save dummy session: \(error)")
-        }
-    }
-
-    var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 16) {
-                    // Recent Activity Header
-                    HStack {
-                        Text("Recent Activity")
-                            .font(.system(size: 24, weight: .bold))
-                            .foregroundStyle(.primary)
-
-                        Spacer()
-
-                        // History button - future feature
-                        Button(action: {
-                            // TODO: Navigate to full history
-                        }) {
-                            Text("History")
-                                .font(.system(size: AppTheme.current.fontSizeBody, weight: .medium))
-                                .foregroundStyle(AppTheme.current.primary)
-                        }
-                    }
-                    .padding(.horizontal, AppTheme.current.spacingXL)
-                    .padding(.top, AppTheme.current.spacingS)
-
-                    // Session List
-                    if sessions.isEmpty {
-                        // Empty state
-                        VStack(spacing: AppTheme.current.spacingL) {
-                            Image(systemName: "clock.badge.exclamationmark")
-                                .font(.system(size: 60))
-                                .foregroundStyle(AppTheme.current.primary.opacity(0.3))
-                                .padding(.top, 60)
-
-                            Text("No Sessions Yet")
-                                .font(.system(size: AppTheme.current.fontSizeTitle, weight: .semibold))
-                                .foregroundStyle(AppTheme.current.textSecondary)
-
-                            Text("Start tracking your practice sessions\nfrom your Apple Watch")
-                                .font(.system(size: AppTheme.current.fontSizeBody))
-                                .foregroundStyle(AppTheme.current.textSecondary.opacity(0.8))
-                                .multilineTextAlignment(.center)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(.top, 40)
-                    } else {
-                        LazyVStack(spacing: AppTheme.current.spacingXL) {
-                            ForEach(groupedSessions, id: \.0) { (sectionTitle, sectionSessions) in
-                                VStack(alignment: .leading, spacing: AppTheme.current.spacingM) {
-                                    // Section header
-                                    Text(sectionTitle)
-                                        .font(.system(size: 18, weight: .semibold))
-                                        .foregroundStyle(AppTheme.current.textPrimary)
-                                        .padding(.horizontal, AppTheme.current.spacingXL)
-
-                                    // Sessions in this section
-                                    LazyVStack(spacing: AppTheme.current.spacingM) {
-                                        ForEach(sectionSessions) { session in
-                                            NavigationLink {
-                                                SessionDetailView(session: session)
-                                            } label: {
-                                                SessionRowView(session: session)
-                                            }
-                                            .buttonStyle(.plain)
-                                            .tint(AppTheme.current.accent)
-                                        }
-                                    }
-                                    .padding(.horizontal, AppTheme.current.spacingXL)
-                                }
-                            }
-                        }
-                    }
-                }
-                .padding(.bottom, AppTheme.current.spacingXL)
-            }
-            .background(AppTheme.current.backgroundPrimary)
-            .navigationTitle("Workouts")
-            .navigationBarTitleDisplayMode(.large)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button(action: {
-                        populateDummyData()
-                    }) {
-                        Image(systemName: "gear")
-                            .frame(width: 25, height: 25)
-                    }
-                }
-            }
-            .toolbarBackground(.visible, for: .tabBar)
-            .toolbarBackground(Color(uiColor: .systemBackground), for: .tabBar)
-            .toolbarColorScheme(colorScheme, for: .tabBar)
-        }
-        .overlay {
-            
         }
     }
 }

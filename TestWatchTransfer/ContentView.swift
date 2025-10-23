@@ -10,6 +10,7 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject var themeManager: ThemeManager
 
     init() {
         // Force tab bar to use proper dark mode colors

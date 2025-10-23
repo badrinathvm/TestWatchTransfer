@@ -10,6 +10,8 @@ import SwiftData
 
 @main
 struct TestWatchTransferApp: App {
+    @StateObject private var themeManager = ThemeManager.shared
+
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Session.self,
@@ -34,6 +36,7 @@ struct TestWatchTransferApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(themeManager)
         }
         .modelContainer(sharedModelContainer)
     }

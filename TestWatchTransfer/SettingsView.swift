@@ -11,12 +11,64 @@ import SwiftData
 struct SettingsView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject var themeManager: ThemeManager
     @Query(sort: \Session.startTime, order: .reverse) private var sessions: [Session]
     @State private var showClearDataAlert = false
+
+    private var currentThemeName: String {
+        switch themeManager.selectedTheme {
+        case "blue": return "Ocean Depths"
+        case "pickleball": return "Flame Burst"
+        case "opticYellow": return "Optic Energy"
+        default: return "Ocean Depths"
+        }
+    }
+
+    private var currentThemeColor: Color {
+        switch themeManager.selectedTheme {
+        case "blue": return .blue
+        case "pickleball": return .orange
+        case "opticYellow": return Color(red: 0.97, green: 1.0, blue: 0.0)
+        default: return .blue
+        }
+    }
 
     var body: some View {
         NavigationStack {
             List {
+                // Appearance Section
+                Section(header: Text("Appearance")) {
+                    NavigationLink(destination: ThemeSelectionView()) {
+                        HStack(spacing: AppTheme.current.spacingM) {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(currentThemeColor.opacity(0.15))
+                                    .frame(width: 32, height: 32)
+
+                                Image(systemName: "paintpalette.fill")
+                                    .font(.system(size: 16))
+                                    .foregroundStyle(currentThemeColor)
+                            }
+
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("App Theme")
+                                    .font(.system(size: AppTheme.current.fontSizeBody))
+                                    .foregroundStyle(AppTheme.current.textPrimary)
+
+                                Text(currentThemeName)
+                                    .font(.system(size: AppTheme.current.fontSizeFootnote))
+                                    .foregroundStyle(AppTheme.current.textSecondary)
+                            }
+
+                            Spacer()
+
+                            Circle()
+                                .fill(currentThemeColor)
+                                .frame(width: 24, height: 24)
+                        }
+                    }
+                }
+
                 Section(header: Text("App Information")) {
                     HStack {
                         Text("Version")
@@ -95,4 +147,5 @@ struct SettingsView: View {
 #Preview {
     SettingsView()
         .modelContainer(for: Session.self)
+        .environmentObject(ThemeManager.shared)
 }

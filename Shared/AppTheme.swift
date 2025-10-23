@@ -5,6 +5,7 @@
 //  Created by Rani Badri on 10/21/25.
 //
 
+import Combine
 import SwiftUI
 
 // MARK: - Theme Protocol
@@ -355,16 +356,48 @@ struct OpticYellowTheme: ThemeProtocol {
     var iconSizeXLarge: CGFloat { 40 }
 }
 
+// MARK: - Theme Manager (Observable)
+
+class ThemeManager: ObservableObject {
+    static let shared = ThemeManager()
+
+    @Published var selectedTheme: String {
+        didSet {
+            UserDefaults.standard.set(selectedTheme, forKey: "selectedTheme")
+        }
+    }
+
+    var currentTheme: ThemeProtocol {
+        AppTheme.theme(for: selectedTheme)
+    }
+
+    private init() {
+        self.selectedTheme = UserDefaults.standard.string(forKey: "selectedTheme") ?? "blue"
+    }
+}
+
 // MARK: - App Theme Manager
 
 struct AppTheme {
-    // Current active theme - change this to switch themes
-    static let current: ThemeProtocol = OpticYellowTheme()
+    // Current active theme - reads from UserDefaults
+    static var current: ThemeProtocol {
+        let selectedTheme = UserDefaults.standard.string(forKey: "selectedTheme") ?? "blue"
+        return theme(for: selectedTheme)
+    }
 
-    // Available themes
-    static let pickleball = PickleballTheme()
-    static let blue = BlueTheme()
-    static let opticYellowTheme = OpticYellowTheme()
+    // Get theme by key
+    static func theme(for key: String) -> ThemeProtocol {
+        switch key {
+        case "pickleball":
+            return PickleballTheme()
+        case "opticYellow":
+            return OpticYellowTheme()
+        case "blue":
+            return BlueTheme()
+        default:
+            return BlueTheme()
+        }
+    }
 
     // Convenience accessors (shorthand)
     static var colors: ThemeProtocol { current }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SessionRowView: View {
     let session: Session
+    @EnvironmentObject var themeManager: ThemeManager
 
     var body: some View {
         HStack(spacing: AppTheme.current.spacingL) {
@@ -19,8 +20,8 @@ struct SessionRowView: View {
                     .frame(width: 56, height: 56)
 
                 Image(systemName: "figure.pickleball")
-                    .font(.system(size: AppTheme.current.iconSizeLarge))
                     .foregroundStyle(AppTheme.current.primary)
+                    .font(.system(size: AppTheme.current.iconSizeLarge))
             }
 
             // Session info
@@ -89,5 +90,6 @@ struct SessionRowView: View {
     )
 
     return SessionRowView(session: session)
+        .environmentObject(ThemeManager.shared)
         .padding()
 }
