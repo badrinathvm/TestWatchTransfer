@@ -29,101 +29,40 @@ struct SearchView: View {
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 16) {
-                    if searchText.isEmpty {
-                        // Header for recent sessions
-                        Text("Recent Sessions")
-                            .font(.system(size: 24, weight: .bold))
-                            .foregroundStyle(.primary)
-                            .padding(.horizontal, 20)
-                            .padding(.top, 8)
-                    } else {
-                        // Header for search results
-                        Text("\(filteredSessions.count) Results")
-                            .font(.system(size: 24, weight: .bold))
-                            .foregroundStyle(.primary)
-                            .padding(.horizontal, 20)
-                            .padding(.top, 8)
-                    }
-
-                    // Session List
-                    if searchText.isEmpty {
-                        // Show recent sessions (last 10)
-                        if sessions.isEmpty {
-                            VStack(spacing: 16) {
-                                Image(systemName: "clock.badge.exclamationmark")
-                                    .font(.system(size: 60))
-                                    .foregroundStyle(.orange.opacity(0.3))
-                                    .padding(.top, 60)
-
-                                Text("No Sessions Yet")
-                                    .font(.system(size: 20, weight: .semibold))
-                                    .foregroundStyle(.secondary)
-
-                                Text("Start tracking your practice sessions\nfrom your Apple Watch")
-                                    .font(.system(size: 15))
-                                    .foregroundStyle(.secondary.opacity(0.8))
-                                    .multilineTextAlignment(.center)
-                            }
-                            .frame(maxWidth: .infinity)
-                            .padding(.top, 40)
-                        } else {
-                            LazyVStack(spacing: 12) {
-                                ForEach(sessions.prefix(10)) { session in
-                                    NavigationLink {
-                                        SessionDetailView(session: session)
-                                    } label: {
-                                        SessionRowView(session: session)
-                                    }
-                                    .buttonStyle(.plain)
-                                    .tint(.orange)
+            Group {
+                if searchText.isEmpty {
+                    // Zero state - show ContentUnavailableView.search
+                    ContentUnavailableView.search
+                } else if filteredSessions.isEmpty {
+                    // No results state
+                    ContentUnavailableView.search(text: searchText)
+                } else {
+                    // Show search results
+                    ScrollView {
+                        LazyVStack(spacing: AppTheme.current.spacingM) {
+                            ForEach(filteredSessions) { session in
+                                NavigationLink {
+                                    SessionDetailView(session: session)
+                                } label: {
+                                    SessionRowView(session: session)
                                 }
+                                .buttonStyle(.plain)
+                                .tint(AppTheme.current.accent)
                             }
-                            .padding(.horizontal, 20)
                         }
-                    } else {
-                        // Show filtered results
-                        if filteredSessions.isEmpty {
-                            VStack(spacing: 16) {
-                                Image(systemName: "magnifyingglass")
-                                    .font(.system(size: 60))
-                                    .foregroundStyle(.orange.opacity(0.3))
-                                    .padding(.top, 60)
-
-                                Text("No Results")
-                                    .font(.system(size: 20, weight: .semibold))
-                                    .foregroundStyle(.secondary)
-
-                                Text("No sessions match '\(searchText)'")
-                                    .font(.system(size: 15))
-                                    .foregroundStyle(.secondary.opacity(0.8))
-                                    .multilineTextAlignment(.center)
-                            }
-                            .frame(maxWidth: .infinity)
-                            .padding(.top, 40)
-                        } else {
-                            LazyVStack(spacing: 12) {
-                                ForEach(filteredSessions) { session in
-                                    NavigationLink {
-                                        SessionDetailView(session: session)
-                                    } label: {
-                                        SessionRowView(session: session)
-                                    }
-                                    .buttonStyle(.plain)
-                                    .tint(.orange)
-                                }
-                            }
-                            .padding(.horizontal, 20)
-                        }
+                        .padding(.horizontal, AppTheme.current.spacingXL)
+                        .padding(.top, AppTheme.current.spacingS)
+                        .padding(.bottom, AppTheme.current.spacingXL)
                     }
+                    .background(AppTheme.current.backgroundPrimary)
                 }
-                .padding(.bottom, 20)
             }
-            .background(Color(UIColor.systemGroupedBackground))
             .navigationTitle("Search")
             .navigationBarTitleDisplayMode(.large)
             .searchable(text: $searchText, prompt: "Search sessions")
+            .toolbarBackground(.visible, for: .tabBar)
+            .toolbarBackground(Color(uiColor: .systemBackground), for: .tabBar)
+            .toolbarColorScheme(colorScheme, for: .tabBar)
         }
     }
 }

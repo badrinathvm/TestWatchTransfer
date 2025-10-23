@@ -38,7 +38,7 @@ struct RectangularView: View {
     let entry: MessageEntry
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: AppTheme.current.spacingXS) {
             HStack {
                 Image(systemName: "message.fill")
                     .font(.caption2)
@@ -46,7 +46,7 @@ struct RectangularView: View {
                     .font(.caption2)
                     .fontWeight(.semibold)
             }
-            .foregroundColor(.blue)
+            .foregroundColor(AppTheme.current.primary)
 
             Text(entry.message)
                 .font(.caption)
@@ -63,7 +63,7 @@ struct InlineView: View {
     let entry: MessageEntry
 
     var body: some View {
-        HStack(spacing: 4) {
+        HStack(spacing: AppTheme.current.spacingXS) {
             Image(systemName: "message.fill")
             Text(entry.message)
                 .lineLimit(1)

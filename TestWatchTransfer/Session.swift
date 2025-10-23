@@ -17,6 +17,10 @@ final class Session {
     var mistakeCount: Int
     var mistakeTimeline: [Date]
     var notes: String?
+    var latitude: Double?
+    var longitude: Double?
+    var locationName: String?
+    var errorCounts: [String: Int]? // Dictionary mapping ErrorType.rawValue to count
 
     // Computed property for duration
     var duration: TimeInterval {
@@ -69,7 +73,7 @@ final class Session {
         return formatter.string(from: startTime)
     }
 
-    init(id: UUID = UUID(), sessionName: String? = nil, startTime: Date, endTime: Date, mistakeCount: Int, mistakeTimeline: [Date], notes: String? = nil) {
+    init(id: UUID = UUID(), sessionName: String? = nil, startTime: Date, endTime: Date, mistakeCount: Int, mistakeTimeline: [Date], notes: String? = nil, latitude: Double? = nil, longitude: Double? = nil, locationName: String? = nil, errorCounts: [String: Int]? = nil) {
         self.id = id
         self.sessionName = sessionName ?? Session.generateSessionName(for: startTime)
         self.startTime = startTime
@@ -77,6 +81,10 @@ final class Session {
         self.mistakeCount = mistakeCount
         self.mistakeTimeline = mistakeTimeline
         self.notes = notes
+        self.latitude = latitude
+        self.longitude = longitude
+        self.locationName = locationName
+        self.errorCounts = errorCounts
     }
 
     // Auto-generate session name based on time of day

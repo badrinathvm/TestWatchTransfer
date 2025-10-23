@@ -59,7 +59,11 @@ struct TestWatchTransferApp: App {
             endTime: sessionData.endTime,
             mistakeCount: sessionData.mistakeCount,
             mistakeTimeline: sessionData.mistakeTimeline,
-            notes: sessionData.notes
+            notes: sessionData.notes,
+            latitude: sessionData.latitude,
+            longitude: sessionData.longitude,
+            locationName: sessionData.locationName,
+            errorCounts: sessionData.errorCounts
         )
 
         context.insert(session)
@@ -67,6 +71,9 @@ struct TestWatchTransferApp: App {
         do {
             try context.save()
             print("✅ Session saved from Watch: \(session.mistakeCount) mistakes")
+            if let locationName = session.locationName {
+                print("📍 Location: \(locationName)")
+            }
         } catch {
             print("❌ Failed to save session: \(error)")
         }

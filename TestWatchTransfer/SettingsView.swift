@@ -61,7 +61,7 @@ struct SettingsView: View {
                 }
             }
             .scrollContentBackground(.hidden)
-            .background(Color(UIColor.systemGroupedBackground))
+            .background(AppTheme.current.backgroundPrimary)
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.large)
             .alert("Clear All Data?", isPresented: $showClearDataAlert) {
@@ -72,6 +72,9 @@ struct SettingsView: View {
             } message: {
                 Text("This will permanently delete all \(sessions.count) session(s) and reset your data. This action cannot be undone.")
             }
+            .toolbarBackground(.visible, for: .tabBar)
+            .toolbarBackground(Color(uiColor: .systemBackground), for: .tabBar)
+            .toolbarColorScheme(colorScheme, for: .tabBar)
         }
     }
 

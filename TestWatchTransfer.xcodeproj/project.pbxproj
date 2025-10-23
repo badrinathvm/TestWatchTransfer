@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		711C6F222EA7E0CE00C03616 /* ErrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711C6F212EA7E0CE00C03616 /* ErrorType.swift */; };
+		711C6F232EA7E0CE00C03616 /* ErrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711C6F212EA7E0CE00C03616 /* ErrorType.swift */; };
+		711C6F242EA7E0CE00C03616 /* ErrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711C6F212EA7E0CE00C03616 /* ErrorType.swift */; };
+		712841722EAA718D0053C134 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712841712EAA718D0053C134 /* AppTheme.swift */; };
+		712841732EAA718D0053C134 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712841712EAA718D0053C134 /* AppTheme.swift */; };
+		712841742EAA718D0053C134 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712841712EAA718D0053C134 /* AppTheme.swift */; };
 		71B5038D2E9EE2EB001DC6F3 /* Connectivity Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 71B503832E9EE2EB001DC6F3 /* Connectivity Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		71B503942E9EE326001DC6F3 /* WatchConnectivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B503932E9EE30A001DC6F3 /* WatchConnectivityManager.swift */; };
 		71B503952E9EE326001DC6F3 /* WatchConnectivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B503932E9EE30A001DC6F3 /* WatchConnectivityManager.swift */; };
@@ -78,6 +84,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		711C6F212EA7E0CE00C03616 /* ErrorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorType.swift; sourceTree = "<group>"; };
+		712841712EAA718D0053C134 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		71B503712E9EE2D9001DC6F3 /* TestWatchTransfer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestWatchTransfer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		71B503832E9EE2EB001DC6F3 /* Connectivity Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Connectivity Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		71B503932E9EE30A001DC6F3 /* WatchConnectivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnectivityManager.swift; sourceTree = "<group>"; };
@@ -172,6 +180,8 @@
 		71B503922E9EE2FB001DC6F3 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				712841712EAA718D0053C134 /* AppTheme.swift */,
+				711C6F212EA7E0CE00C03616 /* ErrorType.swift */,
 				71B503E92E9F650E001DC6F3 /* SessionData.swift */,
 				71B503DB2E9EFE90001DC6F3 /* CounterManager.swift */,
 				71B503932E9EE30A001DC6F3 /* WatchConnectivityManager.swift */,
@@ -336,7 +346,9 @@
 			files = (
 				71B503EB2E9F650E001DC6F3 /* SessionData.swift in Sources */,
 				71B503942E9EE326001DC6F3 /* WatchConnectivityManager.swift in Sources */,
+				712841722EAA718D0053C134 /* AppTheme.swift in Sources */,
 				71B5039A2E9EECC8001DC6F3 /* SharedDataManager.swift in Sources */,
+				711C6F242EA7E0CE00C03616 /* ErrorType.swift in Sources */,
 				71B503DD2E9EFE90001DC6F3 /* CounterManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -345,10 +357,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				711C6F222EA7E0CE00C03616 /* ErrorType.swift in Sources */,
 				71B503EC2E9F650E001DC6F3 /* SessionData.swift in Sources */,
 				71B503952E9EE326001DC6F3 /* WatchConnectivityManager.swift in Sources */,
 				71B503992E9EECC8001DC6F3 /* SharedDataManager.swift in Sources */,
 				71B503DC2E9EFE90001DC6F3 /* CounterManager.swift in Sources */,
+				712841732EAA718D0053C134 /* AppTheme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,7 +371,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				71B503EA2E9F650E001DC6F3 /* SessionData.swift in Sources */,
+				712841742EAA718D0053C134 /* AppTheme.swift in Sources */,
 				71B503DE2E9EFE90001DC6F3 /* CounterManager.swift in Sources */,
+				711C6F232EA7E0CE00C03616 /* ErrorType.swift in Sources */,
 				71B503DF2E9F2B47001DC6F3 /* WatchConnectivityManager.swift in Sources */,
 				71B503D62E9EF75E001DC6F3 /* SharedDataManager.swift in Sources */,
 			);
@@ -576,6 +592,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Connectivity;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We use your location to track where your practice sessions take place";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.badrinathvm.TestWatchTransfer;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -610,6 +627,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Connectivity;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We use your location to track where your practice sessions take place";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.badrinathvm.TestWatchTransfer;
 				LD_RUNPATH_SEARCH_PATHS = (

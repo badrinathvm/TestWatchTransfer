@@ -13,7 +13,7 @@ struct WatchContentView: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 12) {
+            VStack(spacing: AppTheme.current.spacingM) {
                 Text("Watch App")
                     .font(.headline)
 

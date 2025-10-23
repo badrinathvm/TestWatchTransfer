@@ -69,6 +69,79 @@ struct SessionListView: View {
         return sortedGroups
     }
 
+    // Generate dummy data for testing UI
+    private func populateDummyData() {
+        let calendar = Calendar.current
+        let now = Date()
+
+        // This Week sessions (3 sessions)
+        for i in 0..<3 {
+            let daysAgo = i * 2 // 0, 2, 4 days ago
+            if let sessionDate = calendar.date(byAdding: .day, value: -daysAgo, to: now) {
+                createDummySession(
+                    name: "This Week Session \(i + 1)",
+                    startDate: sessionDate,
+                    mistakes: Int.random(in: 5...15)
+                )
+            }
+        }
+
+        // This Month sessions (4 sessions)
+        for i in 0..<4 {
+            let daysAgo = 7 + (i * 3) // 7, 10, 13, 16 days ago
+            if let sessionDate = calendar.date(byAdding: .day, value: -daysAgo, to: now) {
+                createDummySession(
+                    name: "This Month Session \(i + 1)",
+                    startDate: sessionDate,
+                    mistakes: Int.random(in: 8...20)
+                )
+            }
+        }
+
+        // Previous months sessions (6 sessions spread across 2-3 months)
+        let previousMonthsOffsets = [35, 42, 50, 65, 72, 90] // Days ago
+        for (index, daysAgo) in previousMonthsOffsets.enumerated() {
+            if let sessionDate = calendar.date(byAdding: .day, value: -daysAgo, to: now) {
+                let monthYear = sessionDate.formatted(.dateTime.month(.wide).year())
+                createDummySession(
+                    name: "Session \(index + 1)",
+                    startDate: sessionDate,
+                    mistakes: Int.random(in: 3...25)
+                )
+            }
+        }
+    }
+
+    private func createDummySession(name: String, startDate: Date, mistakes: Int) {
+        let duration = TimeInterval.random(in: 1800...7200) // 30 min to 2 hours
+        let endDate = startDate.addingTimeInterval(duration)
+
+        // Generate realistic mistake timeline
+        var mistakeTimeline: [Date] = []
+        let timeInterval = duration / Double(mistakes)
+        for i in 0..<mistakes {
+            let mistakeTime = startDate.addingTimeInterval(timeInterval * Double(i) + Double.random(in: -30...30))
+            mistakeTimeline.append(mistakeTime)
+        }
+
+        let session = Session(
+            sessionName: name,
+            startTime: startDate,
+            endTime: endDate,
+            mistakeCount: mistakes,
+            mistakeTimeline: mistakeTimeline,
+            notes: "Dummy data for testing UI"
+        )
+
+        modelContext.insert(session)
+
+        do {
+            try modelContext.save()
+        } catch {
+            print("❌ Failed to save dummy session: \(error)")
+        }
+    }
+
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -86,45 +159,45 @@ struct SessionListView: View {
                             // TODO: Navigate to full history
                         }) {
                             Text("History")
-                                .font(.system(size: 16, weight: .medium))
-                                .foregroundStyle(.orange)
+                                .font(.system(size: AppTheme.current.fontSizeBody, weight: .medium))
+                                .foregroundStyle(AppTheme.current.primary)
                         }
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.top, 8)
+                    .padding(.horizontal, AppTheme.current.spacingXL)
+                    .padding(.top, AppTheme.current.spacingS)
 
                     // Session List
                     if sessions.isEmpty {
                         // Empty state
-                        VStack(spacing: 16) {
+                        VStack(spacing: AppTheme.current.spacingL) {
                             Image(systemName: "clock.badge.exclamationmark")
                                 .font(.system(size: 60))
-                                .foregroundStyle(.orange.opacity(0.3))
+                                .foregroundStyle(AppTheme.current.primary.opacity(0.3))
                                 .padding(.top, 60)
 
                             Text("No Sessions Yet")
-                                .font(.system(size: 20, weight: .semibold))
-                                .foregroundStyle(.secondary)
+                                .font(.system(size: AppTheme.current.fontSizeTitle, weight: .semibold))
+                                .foregroundStyle(AppTheme.current.textSecondary)
 
                             Text("Start tracking your practice sessions\nfrom your Apple Watch")
-                                .font(.system(size: 15))
-                                .foregroundStyle(.secondary.opacity(0.8))
+                                .font(.system(size: AppTheme.current.fontSizeBody))
+                                .foregroundStyle(AppTheme.current.textSecondary.opacity(0.8))
                                 .multilineTextAlignment(.center)
                         }
                         .frame(maxWidth: .infinity)
                         .padding(.top, 40)
                     } else {
-                        LazyVStack(spacing: 20) {
+                        LazyVStack(spacing: AppTheme.current.spacingXL) {
                             ForEach(groupedSessions, id: \.0) { (sectionTitle, sectionSessions) in
-                                VStack(alignment: .leading, spacing: 12) {
+                                VStack(alignment: .leading, spacing: AppTheme.current.spacingM) {
                                     // Section header
                                     Text(sectionTitle)
                                         .font(.system(size: 18, weight: .semibold))
-                                        .foregroundStyle(.primary)
-                                        .padding(.horizontal, 20)
+                                        .foregroundStyle(AppTheme.current.textPrimary)
+                                        .padding(.horizontal, AppTheme.current.spacingXL)
 
                                     // Sessions in this section
-                                    LazyVStack(spacing: 12) {
+                                    LazyVStack(spacing: AppTheme.current.spacingM) {
                                         ForEach(sectionSessions) { session in
                                             NavigationLink {
                                                 SessionDetailView(session: session)
@@ -132,26 +205,36 @@ struct SessionListView: View {
                                                 SessionRowView(session: session)
                                             }
                                             .buttonStyle(.plain)
-                                            .tint(.orange)
+                                            .tint(AppTheme.current.accent)
                                         }
                                     }
-                                    .padding(.horizontal, 20)
+                                    .padding(.horizontal, AppTheme.current.spacingXL)
                                 }
                             }
                         }
                     }
                 }
-                .padding(.bottom, 20)
+                .padding(.bottom, AppTheme.current.spacingXL)
             }
-            .background(Color(UIColor.systemGroupedBackground))
+            .background(AppTheme.current.backgroundPrimary)
             .navigationTitle("Workouts")
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
-                ToolbarItem(placement: .topBarLeading, content: {
-                    Image(systemName: "gear")
-                        .frame(width: 25 , height: 25)
-                })
+                ToolbarItem(placement: .topBarLeading) {
+                    Button(action: {
+                        populateDummyData()
+                    }) {
+                        Image(systemName: "gear")
+                            .frame(width: 25, height: 25)
+                    }
+                }
             }
+            .toolbarBackground(.visible, for: .tabBar)
+            .toolbarBackground(Color(uiColor: .systemBackground), for: .tabBar)
+            .toolbarColorScheme(colorScheme, for: .tabBar)
+        }
+        .overlay {
+            
         }
     }
 }

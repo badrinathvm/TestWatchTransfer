@@ -38,9 +38,9 @@ struct CounterWidgetEntryView : View {
     // Progress gauge thresholds
     private var gaugeColor: Color {
         switch entry.count {
-        case 1...5: return .green
-        case 6...10: return .orange
-        default: return .red
+        case 1...5: return AppTheme.current.success
+        case 6...10: return AppTheme.current.warning
+        default: return AppTheme.current.error
         }
     }
 
@@ -62,7 +62,7 @@ struct CounterWidgetEntryView : View {
                     // Gauge progress
                     Gauge(value: progress) {
                         Text("\(entry.count)")
-                            .font(.system(size: 28, weight: .bold, design: .rounded))
+                            .font(.system(size: AppTheme.current.iconSizeLarge, weight: .bold, design: .rounded))
                             .foregroundStyle(.white)
                     }
                     .gaugeStyle(.accessoryCircularCapacity)
@@ -74,16 +74,16 @@ struct CounterWidgetEntryView : View {
         case .accessoryRectangular:
             Button(intent: IncrementCounterIntent()) {
                 Gauge(value: progress) {
-                    HStack(spacing: 8) {
+                    HStack(spacing: AppTheme.current.spacingS) {
                         Image(systemName: "plus.circle.fill")
-                            .font(.system(size: 20, weight: .medium))
+                            .font(.system(size: AppTheme.current.iconSizeMedium, weight: .medium))
                             .foregroundStyle(gaugeColor)
                         VStack(alignment: .leading, spacing: 2) {
                             Text("Counter")
-                                .font(.system(size: 10, weight: .semibold))
+                                .font(.system(size: AppTheme.current.fontSizeCaption, weight: .semibold))
                                 .foregroundStyle(.secondary)
                             Text("\(entry.count)")
-                                .font(.system(size: 24, weight: .bold, design: .rounded))
+                                .font(.system(size: AppTheme.current.iconSizeLarge, weight: .bold, design: .rounded))
                                 .foregroundStyle(.white)
                         }
                     }
@@ -99,11 +99,11 @@ struct CounterWidgetEntryView : View {
             Button(intent: IncrementCounterIntent()) {
                 VStack(spacing: 1) {
                     Text("\(entry.count)")
-                        .font(.system(size: 16, weight: .medium, design: .rounded))
+                        .font(.system(size: AppTheme.current.iconSizeSmall, weight: .medium, design: .rounded))
                         .foregroundStyle(gaugeColor)
 
                     Image(systemName: "figure.pickleball")
-                        .font(.system(size: 14, weight: .medium))
+                        .font(.system(size: AppTheme.current.fontSizeFootnote, weight: .medium))
                         .foregroundStyle(gaugeColor.opacity(0.8))
                 }
             }
@@ -116,7 +116,7 @@ struct CounterWidgetEntryView : View {
 
         case .accessoryInline:
             Button(intent: IncrementCounterIntent()) {
-                HStack(spacing: 4) {
+                HStack(spacing: AppTheme.current.spacingXS) {
                     Image(systemName: "plus.circle.fill")
                     Text("\(entry.count)")
                         .fontWeight(.semibold)

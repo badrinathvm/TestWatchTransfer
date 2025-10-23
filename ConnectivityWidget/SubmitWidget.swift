@@ -38,16 +38,16 @@ struct SubmitWidgetEntryView: View {
             }
 
         case .accessoryRectangular:
-            HStack(spacing: 8) {
+            HStack(spacing: AppTheme.current.spacingS) {
                 Image(systemName: "paperplane.fill")
-                    .font(.system(size: 20, weight: .medium))
-                    .foregroundStyle(.blue)
+                    .font(.system(size: AppTheme.current.iconSizeMedium, weight: .medium))
+                    .foregroundStyle(AppTheme.current.primary)
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Submit Counter")
-                        .font(.system(size: 10, weight: .semibold))
+                        .font(.system(size: AppTheme.current.fontSizeCaption, weight: .semibold))
                         .foregroundStyle(.secondary)
                     Text("\(entry.count)")
-                        .font(.system(size: 24, weight: .bold, design: .rounded))
+                        .font(.system(size: AppTheme.current.iconSizeLarge, weight: .bold, design: .rounded))
                         .foregroundStyle(.white)
                 }
             }
@@ -55,16 +55,16 @@ struct SubmitWidgetEntryView: View {
         case .accessoryCorner:
             ZStack {
                 Image(systemName: "checkmark.circle.fill")
-                    .font(.system(size: 24, weight: .medium))
-                    .foregroundStyle(.green)
+                    .font(.system(size: AppTheme.current.iconSizeLarge, weight: .medium))
+                    .foregroundStyle(AppTheme.current.success)
             }
             .widgetLabel {
                 Text("Submit")
-                    .font(.system(size: 12, weight: .semibold))
+                    .font(.system(size: AppTheme.current.fontSizeCaption, weight: .semibold))
             }
 
         case .accessoryInline:
-            HStack(spacing: 4) {
+            HStack(spacing: AppTheme.current.spacingXS) {
                 Image(systemName: "paperplane.fill")
                 Text("Submit: \(entry.count)")
                     .fontWeight(.semibold)

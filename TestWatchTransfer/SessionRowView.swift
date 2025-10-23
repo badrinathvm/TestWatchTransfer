@@ -11,32 +11,32 @@ struct SessionRowView: View {
     let session: Session
 
     var body: some View {
-        HStack(spacing: 16) {
+        HStack(spacing: AppTheme.current.spacingL) {
             // Counter icon on the left
             ZStack {
                 Circle()
-                    .fill(Color.orange.opacity(0.15))
+                    .fill(AppTheme.current.primaryLight)
                     .frame(width: 56, height: 56)
 
                 Image(systemName: "figure.pickleball")
-                    .font(.system(size: 28))
-                    .foregroundStyle(.orange)
+                    .font(.system(size: AppTheme.current.iconSizeLarge))
+                    .foregroundStyle(AppTheme.current.primary)
             }
 
             // Session info
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: AppTheme.current.spacingXS) {
                 Text(session.sessionName)
-                    .font(.system(size: 18, weight: .semibold))
+                    .font(.system(size: AppTheme.current.fontSizeTitle, weight: .semibold))
                     .foregroundStyle(.primary)
 
-                HStack(spacing: 8) {
+                HStack(spacing: AppTheme.current.spacingS) {
                     // Mistake count
-                    HStack(spacing: 4) {
+                    HStack(spacing: AppTheme.current.spacingXS) {
                         Image(systemName: "exclamationmark.circle.fill")
-                            .font(.system(size: 12))
-                            .foregroundStyle(.orange)
+                            .font(.system(size: AppTheme.current.fontSizeCaption))
+                            .foregroundStyle(AppTheme.current.primary)
                         Text("\(session.mistakeCount)")
-                            .font(.system(size: 14, weight: .medium))
+                            .font(.system(size: AppTheme.current.fontSizeFootnote, weight: .medium))
                             .foregroundStyle(.secondary)
                     }
 
@@ -45,7 +45,7 @@ struct SessionRowView: View {
 
                     // Duration
                     Text(session.formattedDuration)
-                        .font(.system(size: 14, weight: .medium))
+                        .font(.system(size: AppTheme.current.fontSizeFootnote, weight: .medium))
                         .foregroundStyle(.secondary)
                 }
             }
@@ -53,19 +53,24 @@ struct SessionRowView: View {
             Spacer()
 
             // Time on the right
-            VStack(alignment: .trailing, spacing: 4) {
+            VStack(alignment: .trailing, spacing: AppTheme.current.spacingXS) {
                 Text(session.relativeTimeString)
-                    .font(.system(size: 14, weight: .medium))
+                    .font(.system(size: AppTheme.current.fontSizeFootnote, weight: .medium))
                     .foregroundStyle(.secondary)
 
                 Text(session.timeString)
-                    .font(.system(size: 12))
+                    .font(.system(size: AppTheme.current.fontSizeCaption))
                     .foregroundStyle(.secondary.opacity(0.7))
             }
         }
-        .padding(16)
-        .background(Color(.systemGray6))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .padding(AppTheme.current.spacingL)
+        .background(AppTheme.current.surface)
+        .clipShape(RoundedRectangle(cornerRadius: AppTheme.current.radiusL))
+        .overlay(
+            RoundedRectangle(cornerRadius: AppTheme.current.radiusL)
+                .stroke(Color.primary.opacity(0.1), lineWidth: 1)
+        )
+        .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 2)
     }
 }
 

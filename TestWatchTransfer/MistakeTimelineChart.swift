@@ -65,7 +65,7 @@ struct MistakeTimelineChart: View {
                 )
                 .foregroundStyle(
                     LinearGradient(
-                        gradient: Gradient(colors: [Color.orange.opacity(0.6), Color.orange.opacity(0.1)]),
+                        gradient: Gradient(colors: [AppTheme.current.primary.opacity(0.6), AppTheme.current.primary.opacity(0.1)]),
                         startPoint: .top,
                         endPoint: .bottom
                     )
@@ -75,7 +75,7 @@ struct MistakeTimelineChart: View {
                     x: .value("Time", dataPoint.timeInMinutes),
                     y: .value("Mistakes", dataPoint.cumulativeMistakes)
                 )
-                .foregroundStyle(Color.orange)
+                .foregroundStyle(AppTheme.current.primary)
                 .lineStyle(StrokeStyle(lineWidth: 2.5))
             }
             .chartXAxis {
@@ -84,7 +84,7 @@ struct MistakeTimelineChart: View {
                     AxisValueLabel {
                         if let minutes = value.as(Double.self) {
                             Text("\(Int(minutes))")
-                                .font(.system(size: 12))
+                                .font(.system(size: AppTheme.current.fontSizeCaption))
                                 .foregroundStyle(.secondary)
                         }
                     }
@@ -96,7 +96,7 @@ struct MistakeTimelineChart: View {
                     AxisValueLabel {
                         if let count = value.as(Int.self) {
                             Text("\(count)")
-                                .font(.system(size: 12))
+                                .font(.system(size: AppTheme.current.fontSizeCaption))
                                 .foregroundStyle(.secondary)
                         }
                     }
@@ -113,10 +113,10 @@ struct MistakeTimelineChart: View {
             HStack(spacing: 24) {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Mistakes per hour")
-                        .font(.system(size: 13, weight: .medium))
+                        .font(.system(size: AppTheme.current.fontSizeFootnote, weight: .medium))
                         .foregroundStyle(.secondary)
                     Text(String(format: "%.1f", session.mistakesPerHour))
-                        .font(.system(size: 22, weight: .bold, design: .rounded))
+                        .font(.system(size: AppTheme.current.fontSizeTitle, weight: .bold, design: .rounded))
                         .foregroundStyle(.primary)
                 }
 
@@ -124,17 +124,22 @@ struct MistakeTimelineChart: View {
 
                 VStack(alignment: .trailing, spacing: 4) {
                     Text("Most active period")
-                        .font(.system(size: 13, weight: .medium))
+                        .font(.system(size: AppTheme.current.fontSizeFootnote, weight: .medium))
                         .foregroundStyle(.secondary)
                     Text(mostActivePeriod)
-                        .font(.system(size: 22, weight: .bold, design: .rounded))
+                        .font(.system(size: AppTheme.current.fontSizeTitle, weight: .bold, design: .rounded))
                         .foregroundStyle(.primary)
                 }
             }
         }
-        .padding(20)
-        .background(Color(.systemGray6))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .padding(AppTheme.current.spacingXL)
+        .background(AppTheme.current.surface)
+        .clipShape(RoundedRectangle(cornerRadius: AppTheme.current.radiusL))
+        .overlay(
+            RoundedRectangle(cornerRadius: AppTheme.current.radiusL)
+                .stroke(Color.primary.opacity(0.1), lineWidth: 1)
+        )
+        .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 2)
     }
 }
 
