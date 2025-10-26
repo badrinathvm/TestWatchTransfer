@@ -12,21 +12,6 @@ struct ContentView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var themeManager: ThemeManager
 
-    init() {
-        // Force tab bar to use proper dark mode colors
-        let appearance = UITabBarAppearance()
-        appearance.configureWithDefaultBackground()
-        appearance.backgroundColor = .systemBackground
-
-        // Apply to all states to override search role styling
-        UITabBar.appearance().standardAppearance = appearance
-        UITabBar.appearance().scrollEdgeAppearance = appearance
-
-        if #available(iOS 15.0, *) {
-            UITabBar.appearance().scrollEdgeAppearance = appearance
-        }
-    }
-
     var body: some View {
         if #available(iOS 18.0, *) {
             TabView {
@@ -34,18 +19,24 @@ struct ContentView: View {
                     SessionListView()
                 }
 
-                Tab("Search", systemImage: "magnifyingglass", role: .search) {
-                    SearchView()
-                }
+//                Tab("Search", systemImage: "magnifyingglass", role: .search) {
+//                    SearchView()
+//                }
 
                 Tab("Settings", systemImage: "gear") {
                     SettingsView()
                 }
             }
-            .tint(AppTheme.current.accent)
+            .tint(themeManager.currentTheme.primary)
             .toolbarBackground(.visible, for: .tabBar)
-            .toolbarBackground(Color(uiColor: .systemBackground), for: .tabBar)
+            .toolbarBackground(themeManager.currentTheme.backgroundPrimary, for: .tabBar)
             .toolbarColorScheme(colorScheme, for: .tabBar)
+            .onAppear {
+                updateTabBarAppearance()
+            }
+            .onChange(of: themeManager.selectedTheme) { _, _ in
+                updateTabBarAppearance()
+            }
         } else {
             // Fallback for iOS 17 and earlier
             TabView {
@@ -64,7 +55,40 @@ struct ContentView: View {
                         Label("Settings", systemImage: "gear")
                     }
             }
-            .tint(AppTheme.current.accent)
+            .tint(themeManager.currentTheme.primary)
+            .onAppear {
+                updateTabBarAppearance()
+            }
+            .onChange(of: themeManager.selectedTheme) { _, _ in
+                updateTabBarAppearance()
+            }
         }
+    }
+
+    private func updateTabBarAppearance() {
+        let appearance = UITabBarAppearance()
+        appearance.configureWithDefaultBackground()
+
+        // Set background color to match theme
+        appearance.backgroundColor = UIColor(themeManager.currentTheme.backgroundPrimary)
+
+        // Configure item colors
+        let itemAppearance = UITabBarItemAppearance()
+
+        // Normal state (unselected)
+        itemAppearance.normal.iconColor = .systemGray
+        itemAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.systemGray]
+
+        // Selected state
+        itemAppearance.selected.iconColor = UIColor(themeManager.currentTheme.primary)
+        itemAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor(themeManager.currentTheme.primary)]
+
+        appearance.stackedLayoutAppearance = itemAppearance
+        appearance.inlineLayoutAppearance = itemAppearance
+        appearance.compactInlineLayoutAppearance = itemAppearance
+
+        // Apply to all tab bar states
+        UITabBar.appearance().standardAppearance = appearance
+        UITabBar.appearance().scrollEdgeAppearance = appearance
     }
 }

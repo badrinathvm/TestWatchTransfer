@@ -210,7 +210,7 @@ struct SessionDetailView: View {
             }
         }
         .toolbarBackground(.visible, for: .tabBar)
-        .toolbarBackground(Color(uiColor: .systemBackground), for: .tabBar)
+        .toolbarBackground(AppTheme.current.backgroundPrimary, for: .tabBar)
         .toolbarColorScheme(colorScheme, for: .tabBar)
     }
 

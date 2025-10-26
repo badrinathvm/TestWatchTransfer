@@ -19,6 +19,13 @@ struct SessionListView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
+                    // Summary Graphs Section
+                    if !sessions.isEmpty {
+                        SessionSummaryGraphView(sessions: sessions, days: 30)
+                            .padding(.horizontal, AppTheme.current.spacingXL)
+                            .padding(.top, AppTheme.current.spacingM)
+                    }
+
                     // Recent Activity Header
                     HStack {
                         Text("Recent Activity")
@@ -60,35 +67,52 @@ struct SessionListView: View {
                         .frame(maxWidth: .infinity)
                         .padding(.top, 40)
                     } else {
-                        LazyVStack(spacing: AppTheme.current.spacingXL) {
-                            ForEach(groupedSessions, id: \.0) { (sectionTitle, sectionSessions) in
-                                VStack(alignment: .leading, spacing: AppTheme.current.spacingM) {
-                                    // Section header
-                                    Text(sectionTitle)
-                                        .font(.system(size: 18, weight: .semibold))
-                                        .foregroundStyle(AppTheme.current.textPrimary)
-                                        .padding(.horizontal, AppTheme.current.spacingXL)
+                        // Use List for swipe actions support
+                        ForEach(groupedSessions, id: \.0) { (sectionTitle, sectionSessions) in
+                            VStack(alignment: .leading, spacing: AppTheme.current.spacingM) {
+                                // Section header
+                                Text(sectionTitle)
+                                    .font(.system(size: 18, weight: .semibold))
+                                    .foregroundStyle(AppTheme.current.textPrimary)
+                                    .padding(.horizontal, AppTheme.current.spacingXL)
+                                    .padding(.top, AppTheme.current.spacingM)
 
-                                    // Sessions in this section
-                                    LazyVStack(spacing: AppTheme.current.spacingM) {
-                                        ForEach(sectionSessions) { session in
+                                // Sessions List with swipe actions
+                                List {
+                                    ForEach(sectionSessions) { session in
+                                        ZStack {
                                             NavigationLink {
                                                 SessionDetailView(session: session)
                                             } label: {
-                                                SessionRowView(session: session)
+                                                EmptyView()
                                             }
-                                            .buttonStyle(.plain)
-                                            .tint(AppTheme.current.accent)
+                                            .opacity(0)
+
+                                            SessionRowView(session: session)
+                                                .padding(.vertical, 4)
+                                        }
+                                        .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
+                                        .listRowBackground(Color.clear)
+                                        .listRowSeparator(.hidden)
+                                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                            Button(role: .destructive) {
+                                                deleteSession(session)
+                                            } label: {
+                                                Label("Delete", systemImage: "trash")
+                                            }
                                         }
                                     }
-                                    .padding(.horizontal, AppTheme.current.spacingXL)
                                 }
+                                .listStyle(.plain)
+                                .scrollDisabled(true)
+                                .frame(height: CGFloat(sectionSessions.count) * 112)
                             }
                         }
                     }
                 }
                 .padding(.bottom, AppTheme.current.spacingXL)
             }
+            .scrollIndicators(.hidden)
             .background(AppTheme.current.backgroundPrimary)
             .navigationTitle("Workouts")
             .navigationBarTitleDisplayMode(.large)
@@ -103,7 +127,7 @@ struct SessionListView: View {
                 }
             }
             .toolbarBackground(.visible, for: .tabBar)
-            .toolbarBackground(Color(uiColor: .systemBackground), for: .tabBar)
+            .toolbarBackground(themeManager.currentTheme.backgroundPrimary, for: .tabBar)
             .toolbarColorScheme(colorScheme, for: .tabBar)
         }
         .overlay {
@@ -236,6 +260,19 @@ struct SessionListView: View {
             try modelContext.save()
         } catch {
             print("❌ Failed to save dummy session: \(error)")
+        }
+    }
+
+    // Delete a session from the model context
+    private func deleteSession(_ session: Session) {
+        withAnimation {
+            modelContext.delete(session)
+
+            do {
+                try modelContext.save()
+            } catch {
+                print("❌ Failed to delete session: \(error)")
+            }
         }
     }
 }

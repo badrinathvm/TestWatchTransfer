@@ -137,6 +137,9 @@ struct CounterSubmitView: View {
         .onAppear {
             refreshCount()
 
+            // Clear any cached location from previous session
+            locationManager.clearLocation()
+
             // Debug: Print current authorization status
             print("📍 Current location authorization: \(locationManager.authorizationStatus.rawValue)")
             print("📍 Status details: \(authorizationStatusString(locationManager.authorizationStatus))")
@@ -149,11 +152,19 @@ struct CounterSubmitView: View {
                 print("⚠️ Location permission denied or restricted. User needs to enable in Settings.")
             } else {
                 print("✅ Location permission already granted")
+                // Request location early for better accuracy when submitting
+                locationManager.requestLocation()
             }
         }
         .onChange(of: scenePhase) { oldPhase, newPhase in
             if newPhase == .active {
                 refreshCount()
+
+                // Request fresh location when app becomes active
+                if locationManager.authorizationStatus == .authorizedWhenInUse || locationManager.authorizationStatus == .authorizedAlways {
+                    print("📍 App became active - requesting location update")
+                    locationManager.requestLocation()
+                }
             }
         }
     }
@@ -203,13 +214,42 @@ struct CounterSubmitView: View {
         // Save the count before resetting
         submittedCount = count
 
-        // Request current location
-        print("📍 Attempting to request location...")
+        // Request FRESH location right before submitting
+        print("📍 Requesting FRESH location for submission...")
         print("📍 Authorization status: \(authorizationStatusString(locationManager.authorizationStatus))")
+
+        // Store old location and name for comparison
+        let oldLocation = locationManager.currentLocation
+        let oldLocationName = locationManager.locationName
+        if let old = oldLocation {
+            print("📍 Old cached location: \(old.coordinate.latitude), \(old.coordinate.longitude)")
+            print("📍 Old location timestamp: \(old.timestamp)")
+            print("📍 Old location name: \(oldLocationName ?? "nil")")
+        } else {
+            print("📍 No old location cached")
+        }
+
         locationManager.requestLocation()
 
-        // Give location a moment to update, then submit
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        // Give location more time to acquire fresh GPS position AND complete reverse geocoding (4 seconds)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            // Log geocoding status
+            if locationManager.isGeocodingInProgress {
+                print("⚠️ WARNING: Reverse geocoding still in progress, location name may be incomplete")
+            }
+
+            // Determine which location name to use
+            var finalLocationName = locationManager.locationName
+
+            // If location is the same as before and we have an old name, use it
+            if let newLocation = locationManager.currentLocation,
+               let old = oldLocation,
+               old.coordinate.latitude == newLocation.coordinate.latitude &&
+               old.coordinate.longitude == newLocation.coordinate.longitude {
+                print("⚠️ Same location as before, preserving old location name")
+                finalLocationName = oldLocationName
+            }
+
             let sessionData = SessionData(
                 sessionName: nil, // Will auto-generate based on time
                 startTime: CounterManager.shared.sessionStartTime,
@@ -219,15 +259,24 @@ struct CounterSubmitView: View {
                 notes: nil,
                 latitude: locationManager.currentLocation?.coordinate.latitude,
                 longitude: locationManager.currentLocation?.coordinate.longitude,
-                locationName: locationManager.locationName
+                locationName: finalLocationName
             )
 
             print("📤 Submitting session with \(submittedCount) mistakes")
             if let location = locationManager.currentLocation {
-                print("📍 Location: \(location.coordinate.latitude), \(location.coordinate.longitude)")
-                print("📍 Name: \(locationManager.locationName ?? "Unknown")")
+                print("📍 Final location: \(location.coordinate.latitude), \(location.coordinate.longitude)")
+                print("📍 Location timestamp: \(location.timestamp)")
+                print("📍 Location age: \(Date().timeIntervalSince(location.timestamp)) seconds")
+                print("📍 Final location name being saved: \(finalLocationName ?? "Unknown")")
+
+                // Check if this is a fresh location
+                if let old = oldLocation, old.coordinate.latitude == location.coordinate.latitude && old.coordinate.longitude == location.coordinate.longitude {
+                    print("⚠️ WARNING: Using same location as before - preserved old name")
+                } else {
+                    print("✅ New location acquired with new name")
+                }
             } else {
-                print("⚠️ No location available")
+                print("⚠️ No location available for this session")
             }
 
             WatchConnectivityManager.shared.sendSession(sessionData)

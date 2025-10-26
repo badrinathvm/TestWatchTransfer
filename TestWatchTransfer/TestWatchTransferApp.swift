@@ -11,6 +11,7 @@ import SwiftData
 @main
 struct TestWatchTransferApp: App {
     @StateObject private var themeManager = ThemeManager.shared
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
 
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
@@ -37,6 +38,26 @@ struct TestWatchTransferApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(themeManager)
+                .fullScreenCover(isPresented: Binding(
+                    get: { !hasCompletedOnboarding },
+                    set: { newValue in
+                        // When dismissing (newValue = false), mark as completed
+                        if !newValue {
+                            hasCompletedOnboarding = true
+                        }
+                    }
+                )) {
+                    OnboardingView(isPresented: Binding(
+                        get: { !hasCompletedOnboarding },
+                        set: { newValue in
+                            // When OnboardingView sets isPresented to false, mark as completed
+                            if !newValue {
+                                hasCompletedOnboarding = true
+                            }
+                        }
+                    ))
+                    .environmentObject(themeManager)
+                }
         }
         .modelContainer(sharedModelContainer)
     }

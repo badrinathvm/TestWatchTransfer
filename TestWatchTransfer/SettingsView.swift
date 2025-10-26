@@ -14,6 +14,7 @@ struct SettingsView: View {
     @EnvironmentObject var themeManager: ThemeManager
     @Query(sort: \Session.startTime, order: .reverse) private var sessions: [Session]
     @State private var showClearDataAlert = false
+    @State private var showOnboarding = false
 
     private var currentThemeName: String {
         switch themeManager.selectedTheme {
@@ -106,6 +107,34 @@ struct SettingsView: View {
                         .foregroundStyle(.secondary)
                 }
 
+                Section(header: Text("Help & Support")) {
+                    Button(action: {
+                        showOnboarding = true
+                    }) {
+                        HStack(spacing: AppTheme.current.spacingM) {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(AppTheme.current.primaryLight)
+                                    .frame(width: 32, height: 32)
+
+                                Image(systemName: "questionmark.circle.fill")
+                                    .font(.system(size: 16))
+                                    .foregroundStyle(AppTheme.current.primary)
+                            }
+
+                            Text("View Tutorial")
+                                .font(.system(size: AppTheme.current.fontSizeBody))
+                                .foregroundStyle(AppTheme.current.textPrimary)
+
+                            Spacer()
+
+                            Image(systemName: "arrow.right")
+                                .font(.system(size: 12))
+                                .foregroundStyle(AppTheme.current.textSecondary)
+                        }
+                    }
+                }
+
                 Section(header: Text("Data Management")) {
                     Button(role: .destructive) {
                         showClearDataAlert = true
@@ -139,8 +168,12 @@ struct SettingsView: View {
             } message: {
                 Text("This will permanently delete all \(sessions.count) session(s) and reset your data. This action cannot be undone.")
             }
+            .sheet(isPresented: $showOnboarding) {
+                OnboardingView(isPresented: $showOnboarding)
+                    .environmentObject(themeManager)
+            }
             .toolbarBackground(.visible, for: .tabBar)
-            .toolbarBackground(Color(uiColor: .systemBackground), for: .tabBar)
+            .toolbarBackground(themeManager.currentTheme.backgroundPrimary, for: .tabBar)
             .toolbarColorScheme(colorScheme, for: .tabBar)
         }
     }

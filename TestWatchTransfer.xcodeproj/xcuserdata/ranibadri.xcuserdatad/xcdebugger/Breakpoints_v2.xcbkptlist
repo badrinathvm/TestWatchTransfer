@@ -290,6 +290,36 @@
             endingLineNumber = "44"
             landmarkName = "sendToiPhone()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "E920E8DD-36BE-4081-B473-6400EDE4043F - b705ba703e582c8e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Connectivity_Watch_App.WatchContentView.sendToiPhone() -&gt; ()"
+                  moduleName = "Connectivity Watch App.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ranibadri/Documents/projects/TestWatchTransfer/Connectivity%20Watch%20App/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "44"
+                  endingLineNumber = "44">
+               </Location>
+               <Location
+                  uuid = "E920E8DD-36BE-4081-B473-6400EDE4043F - b705ba703e582c8e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Connectivity_Watch_App.WatchContentView.sendToiPhone() -&gt; ()"
+                  moduleName = "Connectivity Watch App.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ranibadri/Documents/projects/TestWatchTransfer/Connectivity%20Watch%20App/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "44"
+                  endingLineNumber = "44">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -562,6 +592,36 @@
             endingLineNumber = "101"
             landmarkName = "session(_:didReceiveMessage:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "34486227-E517-4B18-874F-6C863167B468 - 28b8fcc87ae7e381"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Connectivity_Watch_App.WatchConnectivityManager.session(_: __C.WCSession, didReceiveMessage: Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; ()"
+                  moduleName = "Connectivity Watch App.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ranibadri/Documents/projects/TestWatchTransfer/Shared/WatchConnectivityManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "101"
+                  endingLineNumber = "101">
+               </Location>
+               <Location
+                  uuid = "34486227-E517-4B18-874F-6C863167B468 - 28b8fcc87ae7e381"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Connectivity_Watch_App.WatchConnectivityManager.session(_: __C.WCSession, didReceiveMessage: Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; ()"
+                  moduleName = "Connectivity Watch App.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ranibadri/Documents/projects/TestWatchTransfer/Shared/WatchConnectivityManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "101"
+                  endingLineNumber = "101">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -578,6 +638,64 @@
             endingLineNumber = "94"
             landmarkName = "session(_:didReceiveMessage:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "C5F373CC-D869-424C-A76B-E57CA40DED2A - 28b8fcc87ae7e2ea"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Connectivity_Watch_App.WatchConnectivityManager.session(_: __C.WCSession, didReceiveMessage: Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; ()"
+                  moduleName = "Connectivity Watch App.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ranibadri/Documents/projects/TestWatchTransfer/Shared/WatchConnectivityManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "94"
+                  endingLineNumber = "94">
+               </Location>
+               <Location
+                  uuid = "C5F373CC-D869-424C-A76B-E57CA40DED2A - 8ed9c60bd242f69"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in Connectivity_Watch_App.WatchConnectivityManager.session(_: __C.WCSession, didReceiveMessage: Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; ()"
+                  moduleName = "Connectivity Watch App.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ranibadri/Documents/projects/TestWatchTransfer/Shared/WatchConnectivityManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "95"
+                  endingLineNumber = "95">
+               </Location>
+               <Location
+                  uuid = "C5F373CC-D869-424C-A76B-E57CA40DED2A - 28b8fcc87ae7e2ea"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Connectivity_Watch_App.WatchConnectivityManager.session(_: __C.WCSession, didReceiveMessage: Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; ()"
+                  moduleName = "Connectivity Watch App.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ranibadri/Documents/projects/TestWatchTransfer/Shared/WatchConnectivityManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "94"
+                  endingLineNumber = "94">
+               </Location>
+               <Location
+                  uuid = "C5F373CC-D869-424C-A76B-E57CA40DED2A - 8ed9c60bd242f69"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in Connectivity_Watch_App.WatchConnectivityManager.session(_: __C.WCSession, didReceiveMessage: Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; ()"
+                  moduleName = "Connectivity Watch App.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ranibadri/Documents/projects/TestWatchTransfer/Shared/WatchConnectivityManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "95"
+                  endingLineNumber = "95">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -656,8 +774,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "31"
             endingLineNumber = "31"
-            landmarkName = "LocationManager"
-            landmarkType = "3">
+            landmarkName = "requestLocationPermission()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -728,7 +846,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "051C4F48-B349-48C7-9645-A2FDA6B1FA97"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Shared/AppTheme.swift"
@@ -770,6 +888,68 @@
             endingLineNumber = "21"
             landmarkName = "body"
             landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8B9B5683-9BB1-4CC0-92B3-3139B471F278"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TestWatchTransfer/TestWatchTransferApp.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "604E5B74-3DD3-427C-A0E5-FE4AF2EE50C9"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Connectivity Watch App/CounterSubmitView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "242"
+            endingLineNumber = "242"
+            landmarkName = "submitSession()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "604E5B74-3DD3-427C-A0E5-FE4AF2EE50C9 - 2f6296f4d8d77c9d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in Connectivity_Watch_App.CounterSubmitView.submitSession() -&gt; ()"
+                  moduleName = "Connectivity Watch App.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ranibadri/Documents/projects/TestWatchTransfer/Connectivity%20Watch%20App/CounterSubmitView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "242"
+                  endingLineNumber = "242">
+               </Location>
+               <Location
+                  uuid = "604E5B74-3DD3-427C-A0E5-FE4AF2EE50C9 - 2f6296f4d8d77c9d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in Connectivity_Watch_App.CounterSubmitView.submitSession() -&gt; ()"
+                  moduleName = "Connectivity Watch App.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ranibadri/Documents/projects/TestWatchTransfer/Connectivity%20Watch%20App/CounterSubmitView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "242"
+                  endingLineNumber = "242">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
